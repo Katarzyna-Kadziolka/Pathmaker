@@ -58,5 +58,8 @@ void RunApplication() {
 
     app.MapHealthChecks();
     app.MapControllers();
+    
+    app.AddMigration();
+
     app.Run();
 }
