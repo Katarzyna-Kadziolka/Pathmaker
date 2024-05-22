@@ -1,7 +1,4 @@
 using System.Data.Common;
-using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Configurations;
-using DotNet.Testcontainers.Containers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -14,18 +11,15 @@ using Pathmaker.Api;
 using Pathmaker.Persistence;
 using Pathmaker.Shared.Services.DateTimeProviders;
 using Pathmaker.Tests.Shared.Services.DateTimeProviders;
+using Testcontainers.PostgreSql;
 
 namespace Pathmaker.IntegrationTests;
 
 public class PathmakerApiWebApplicationFactory : WebApplicationFactory<IApiMarker> {
-    private readonly PostgreSqlTestcontainer _dbContainer = new TestcontainersBuilder<PostgreSqlTestcontainer>()
-        .WithDatabase(
-            new PostgreSqlTestcontainerConfiguration(
-                "postgres:14.7-alpine3.17") {
-                Database = "application",
-                Username = "postgres",
-                Password = "password"
-            })
+    private readonly PostgreSqlContainer _postgreSqlContainer = new PostgreSqlBuilder()
+        .WithDatabase("application")
+        .WithUsername("postgres")
+        .WithPassword("password")
         .Build();
 
 
@@ -38,14 +32,14 @@ public class PathmakerApiWebApplicationFactory : WebApplicationFactory<IApiMarke
     }
 
     public async Task InitializeAsync() {
-        await _dbContainer.StartAsync();
+        await _postgreSqlContainer.StartAsync();
         HttpClient = CreateClient();
         await InitializeRespawner();
     }
 
     // ReSharper disable once IdentifierTypo
     private async Task InitializeRespawner() {
-        _dbConnection = new NpgsqlConnection(_dbContainer.ConnectionString);
+        _dbConnection = new NpgsqlConnection(_postgreSqlContainer.GetConnectionString());
         await _dbConnection.OpenAsync();
         _respawner = await Respawner.CreateAsync(_dbConnection, new RespawnerOptions {
             DbAdapter = DbAdapter.Postgres,
@@ -59,7 +53,7 @@ public class PathmakerApiWebApplicationFactory : WebApplicationFactory<IApiMarke
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
         await _dbConnection.CloseAsync();
-        await _dbContainer.StopAsync();
+        await _postgreSqlContainer.StopAsync();
     }
 
 
@@ -68,7 +62,7 @@ public class PathmakerApiWebApplicationFactory : WebApplicationFactory<IApiMarke
 
         var config = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?> {
-                ["ConnectionStrings:Default"] = _dbContainer.ConnectionString
+                ["ConnectionStrings:Default"] = _postgreSqlContainer.GetConnectionString()
             })
             .Build();
         builder.UseConfiguration(config);
