@@ -12,16 +12,7 @@ services:
       - '5433:5432'
     volumes:
       - db-main:/var/lib/postgresql/data
-  pathmaker-api:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - 5024:80
-    environment:
-      - ASPNETCORE_ENVIRONMENT=DockerCompose
-    depends_on:
-      - db-main
+
 volumes:
   db-main:
     driver: local
