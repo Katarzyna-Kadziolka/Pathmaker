@@ -1,1 +1,34 @@
+name: Deploy
 
+on:
+  push:
+    tags:
+    - 'v?[0-9]+\.[0-9]+\.[0-9]+'
+  workflow_dispatch:
+
+jobs:
+  build-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12 
+        with:
+          heroku_api_key: ${{secrets.HEROKU_KEY}}
+          heroku_app_name: pathmaker-api 
+          heroku_email: morasiu2@gmail.com
+          usedocker: true
+          appdir: api/Pathmaker
+  
+  build-app:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v2
+        - name: Deploy to Heroku
+          uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+          with:
+            heroku_api_key: ${{secrets.HEROKU_KEY}}
+            heroku_app_name: pathmaker
+            heroku_email: morasiu2@gmail.com
+            usedocker: true
+            appdir: web
