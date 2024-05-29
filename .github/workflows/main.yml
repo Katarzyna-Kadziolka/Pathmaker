@@ -76,13 +76,6 @@ jobs:
     - name: Start services using Docker Compose
       run: docker-compose up -d
 
-    - name: Wait for services to be ready
-      run: |
-        until curl -s http://localhost:5024/health | grep -q 'Healthy'; do
-          echo "Waiting for API to be ready..."
-          sleep 5
-        done
-
     - name: Install dependencies
       run: npm ci
 
