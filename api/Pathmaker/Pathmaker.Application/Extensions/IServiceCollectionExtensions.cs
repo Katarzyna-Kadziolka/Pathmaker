@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Pathmaker.Application.Behaviour;
 using Pathmaker.Persistence;
 
@@ -15,11 +16,11 @@ namespace Pathmaker.Application.Extensions;
 
 // ReSharper disable once InconsistentNaming
 public static class IServiceCollectionExtensions {
-    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) {
+    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration, IHostEnvironment hostEnvironment) {
         services.AddMediatR(typeof(IApplicationMarker));
         services.AddMapper();
         services.AddFluentValidation();
-        services.AddDbContext(configuration);
+        services.AddDbContext(configuration, hostEnvironment);
         return services;
     }
 
@@ -28,8 +29,16 @@ public static class IServiceCollectionExtensions {
         return builder.UseMiddleware<ApplicationExceptionMiddleware>();
     }
 
-    private static void AddDbContext(this IServiceCollection services, IConfiguration configuration) {
-        services.AddDbContext<ApplicationDbContext>(o => o.UseNpgsql(configuration.GetConnectionString("Default")),
+    private static void AddDbContext(this IServiceCollection services, IConfiguration configuration, IHostEnvironment hostEnvironment) {
+        string connectionString;
+        if (hostEnvironment.IsProduction()) {
+            connectionString = new HerokuDbConnector.HerokuDbConnector().Build();
+        }
+        else {
+            connectionString = configuration.GetConnectionString("Default");
+        }
+        
+        services.AddDbContext<ApplicationDbContext>(o => o.UseNpgsql(connectionString),
                 optionsLifetime: ServiceLifetime.Singleton)
             .AddDbContextFactory<ApplicationDbContext>();
     }
