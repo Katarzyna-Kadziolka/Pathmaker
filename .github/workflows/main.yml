@@ -56,6 +56,7 @@ jobs:
       run: npm run lint
 
   e2e-tests:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     needs: build-app
     defaults:
@@ -79,11 +80,11 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
 
-    - name: Install Playwright browsers
-      run: bin/Debug/net8.0/playwright.ps1 install
-
     - name: Build E2E tests
       run: dotnet build
+
+    - name: Ensure browsers are installed
+      run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
 
     - name: Run E2E tests
       run: dotnet test --no-build --verbosity normal
