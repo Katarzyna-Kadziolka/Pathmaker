@@ -77,10 +77,10 @@ jobs:
       run: docker-compose up -d
 
     - name: Install dependencies
-      run: npm ci
+      run: dotnet restore
 
     - name: Install Playwright browsers
-      run: npx playwright install
+      run: bin/Debug/net8.0/playwright.ps1 install
 
     - name: Build E2E tests
       run: dotnet build
