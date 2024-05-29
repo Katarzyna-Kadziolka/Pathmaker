@@ -24,7 +24,7 @@ services:
       - db-main
   pathmaker-app:
     build:
-      context: .
+      context: ../web
       dockerfile: Dockerfile
     ports:
       - 8080:80
