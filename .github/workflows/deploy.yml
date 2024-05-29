@@ -7,28 +7,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-api:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Determine changed directory
+        id: determine_changed_directory
+        run: echo "::set-output name=changed_directory::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E 'api/|web/' | cut -d'/' -f1 | sort -u)"
+
       - name: Deploy to Heroku
+        if: steps.determine_changed_directory.outputs.changed_directory != ''
         uses: akhileshns/heroku-deploy@v3.12.12 
         with:
           heroku_api_key: ${{secrets.HEROKU_KEY}}
-          heroku_app_name: pathmaker-api 
           heroku_email: morasiu2@gmail.com
           usedocker: true
-          appdir: api/Pathmaker
-  
-  build-app:
-    runs-on: ubuntu-latest
-    steps:
-        - uses: actions/checkout@v2
-        - name: Deploy to Heroku
-          uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-          with:
-            heroku_api_key: ${{secrets.HEROKU_KEY}}
-            heroku_app_name: pathmaker
-            heroku_email: morasiu2@gmail.com
-            usedocker: true
-            appdir: web
+          appdir: ${{ steps.determine_changed_directory.outputs.changed_directory }}
