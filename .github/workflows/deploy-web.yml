@@ -18,7 +18,7 @@ jobs:
           uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
           with:
             heroku_api_key: ${{secrets.HEROKU_KEY}}
-            heroku_app_name: pathmaker
+            heroku_app_name: pathmaker-app
             heroku_email: morasiu2@gmail.com
             usedocker: true
             appdir: web
