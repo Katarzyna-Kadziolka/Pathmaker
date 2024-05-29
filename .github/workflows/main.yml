@@ -50,7 +50,7 @@ jobs:
       run: npm run build --if-present
 
     - name: Test app
-      run: vitest
+      run: npm test
 
     - name: Lint app
       run: npm run lint
