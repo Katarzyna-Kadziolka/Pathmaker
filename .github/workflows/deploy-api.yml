@@ -22,3 +22,5 @@ jobs:
           heroku_email: morasiu2@gmail.com
           usedocker: true
           appdir: api/Pathmaker
+        env:
+          NODE_ENV: production
