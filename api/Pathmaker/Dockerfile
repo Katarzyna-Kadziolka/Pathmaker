@@ -19,5 +19,5 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 ARG ENVIRONMENT
 ENV ASPNETCORE_ENVIRONMENT ${ENVIRONMENT}
-ENTRYPOINT ["dotnet", "Pathmaker.Api.dll"]
+ENTRYPOINT ["dotnet", "Pathmaker.Api.dll", "--environment=Development"]
 CMD ASPNETCORE_URLS=http://*:$PORT dotnet Pathmaker.Api.dll
