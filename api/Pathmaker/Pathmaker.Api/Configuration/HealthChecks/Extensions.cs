@@ -5,9 +5,16 @@ namespace Pathmaker.Api.Configuration.HealthChecks;
 public static class Extensions {
     public static IServiceCollection AddHealthChecks(this IServiceCollection services, IConfiguration configuration,
         IWebHostEnvironment webHostEnvironment) {
+        string connectionString;
+        if (webHostEnvironment.IsProduction()) {
+            connectionString = new HerokuDbConnector.HerokuDbConnector().Build();  
+        }
+        else {
+            connectionString = configuration.GetConnectionString("Default")!;
+        }
         services
             .AddHealthChecks()
-            .AddNpgSql(configuration.GetConnectionString("Default")!);
+            .AddNpgSql(connectionString);
 
         return services;
     }

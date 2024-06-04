@@ -35,7 +35,7 @@ public static class IServiceCollectionExtensions {
             connectionString = new HerokuDbConnector.HerokuDbConnector().Build();
         }
         else {
-            connectionString = configuration.GetConnectionString("Default");
+            connectionString = configuration.GetConnectionString("Default")!;
         }
         
         services.AddDbContext<ApplicationDbContext>(o => o.UseNpgsql(connectionString),
