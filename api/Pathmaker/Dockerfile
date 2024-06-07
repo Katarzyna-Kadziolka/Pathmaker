@@ -1,4 +1,4 @@
-﻿#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+﻿# Build ASP.NET API
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -17,6 +17,11 @@ RUN dotnet publish "Pathmaker.Api.csproj" -c Release -o /app/publish /p:UseAppHo
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+# Adds support for ASPNETCORE_ENVIRONMENT in Dockerfile
 ARG ENVIRONMENT
 ENV ASPNETCORE_ENVIRONMENT ${ENVIRONMENT}
+# For Heroku hosting:
+# Dockerfile cannot have EXPOSE
+# Application must be using $PORT variable given by Heroku
+ARG PORT
 CMD ASPNETCORE_URLS=http://*:$PORT dotnet Pathmaker.Api.dll
