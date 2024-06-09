@@ -9,6 +9,9 @@ import router from './router'
 import en from "./locales/en.json"
 import {createI18n} from "vue-i18n";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import "@fontsource/source-sans-pro";
+import "@fontsource/source-sans-pro/400.css";
+import "@fontsource/source-sans-pro/400-italic.css";
 
 const i18n = createI18n({
     locale: navigator.language,
