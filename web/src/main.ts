@@ -8,6 +8,7 @@ import router from './router'
 
 import en from "./locales/en.json"
 import {createI18n} from "vue-i18n";
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const i18n = createI18n({
     locale: navigator.language,
@@ -21,5 +22,6 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 app.use(i18n)
+app.component('font-awesome-icon', FontAwesomeIcon)
 
 app.mount('#app')
