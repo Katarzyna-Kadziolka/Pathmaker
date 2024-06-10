@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import NavbarButton from "@/components/layout/AppNavbarButton.vue";
-import {computed, onBeforeUnmount, onMounted, ref, watch} from "vue";
-import {faBars, faSignsPost, faDiceD20, faFeather, faArrowRightToBracket} from "@fortawesome/free-solid-svg-icons";
+import {computed} from "vue";
+import {faSignsPost, faDiceD20, faFeather, faArrowRightToBracket} from "@fortawesome/free-solid-svg-icons";
 import {useRoute} from "vue-router";
 import router from "@/router";
-import MobileNavigationBarButton from "@/components/layout/MobileNavigationBarButton.vue";
 
 const route = useRoute();
 
@@ -84,7 +83,7 @@ img {
   }
 
   &__active {
-    opacity: 1;
+    opacity: 80%;
   }
   &__navigation {
     display: flex;

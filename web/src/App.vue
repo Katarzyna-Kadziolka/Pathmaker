@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import {useI18n} from 'vue-i18n'
 import Navbar from "@/components/layout/AppNavbar.vue";
 import MobileNavigationBar from "@/components/layout/MobileNavigationBar.vue";
