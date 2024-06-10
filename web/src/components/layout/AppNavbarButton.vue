@@ -27,6 +27,10 @@ defineProps<{
     cursor: pointer;
     background: $color-navbar;
     opacity: 60%;
+    transition: opacity 0.3s ease-in-out;
+    &:hover {
+      opacity: 1;
+    }
   }
 
   &__active {

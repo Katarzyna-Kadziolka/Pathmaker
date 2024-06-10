@@ -31,7 +31,7 @@ defineProps<{
     font-size: 1.5rem;
   }
   &__active {
-    opacity: 80%;
+    opacity: 1;
   }
 }
 </style>
