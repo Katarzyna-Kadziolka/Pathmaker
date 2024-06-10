@@ -33,7 +33,6 @@ const activeItemName = computed(() => route.name);
     width: 100%;
     border-top: 0.1rem solid $color-border;
     background: $color-navbar;
-    height: $nav-height;
   }
 }
 </style>

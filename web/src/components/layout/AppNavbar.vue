@@ -4,6 +4,7 @@ import {computed, onBeforeUnmount, onMounted, ref, watch} from "vue";
 import {faBars, faSignsPost, faDiceD20, faFeather, faArrowRightToBracket} from "@fortawesome/free-solid-svg-icons";
 import {useRoute} from "vue-router";
 import router from "@/router";
+import MobileNavigationBarButton from "@/components/layout/MobileNavigationBarButton.vue";
 
 const route = useRoute();
 
@@ -18,10 +19,13 @@ const activeItemName = computed(() => route.name);
   <div class="navbar__container">
     <div class="navbar__web">
       <img src="@/assets/Pathmaker-logo.png" alt="">
-      <NavbarButton :icon=faSignsPost name="Explore"/>
-      <NavbarButton :icon="faDiceD20" name="Play"/>
-      <NavbarButton :icon="faFeather" name="Create"/>
-      <NavbarButton :icon="faArrowRightToBracket" name="Log In"/>
+      <div class="navbar__navigation">
+        <NavbarButton :icon=faSignsPost name="Explore" :is-active="activeItemName == 'explore'" @click="() => onItemClick('explore')"/>
+        <NavbarButton :icon="faDiceD20" name="Play" :is-active="activeItemName == 'play'" @click="() => onItemClick('play')"/>
+        <NavbarButton :icon="faFeather" name="Create" :is-active="activeItemName == 'create'" @click="() => onItemClick('create')"/>
+      </div>
+
+      <NavbarButton class="navbar__navigation-account" :icon="faArrowRightToBracket" name="Log In" :is-active="activeItemName == 'logIn'" @click="() => onItemClick('logIn')"/>
     </div>
     <div class="navbar__mobile">
       <img src="@/assets/Pathmaker-logo.png" alt="">
@@ -56,12 +60,13 @@ img {
     height: $nav-height;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    width: 100%;
     @media(max-width: 769px) {
       display: none;
     }
   }
   &__mobile {
+    height: $nav-height;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -80,6 +85,15 @@ img {
 
   &__active {
     opacity: 1;
+  }
+  &__navigation {
+    display: flex;
+    padding: 1rem;
+    column-gap: 1rem;
+  }
+  &__navigation-account {
+    margin-left: auto;
+    margin-right: 1rem;
   }
 }
 

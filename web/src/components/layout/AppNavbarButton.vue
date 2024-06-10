@@ -6,11 +6,12 @@ import type {IconDefinition} from "@fortawesome/free-brands-svg-icons";
 defineProps<{
   icon: IconDefinition,
   name: string
+  isActive: boolean
 }>()
 </script>
 
 <template>
-  <div class="navbar-button__container">
+  <div class="navbar-button__container" :class="[isActive ? 'navbar-button__active' : '']">
     <font-awesome-icon :icon="icon"/>
     <span>{{ name }}</span>
   </div>
@@ -25,16 +26,11 @@ defineProps<{
     padding: 1rem;
     cursor: pointer;
     background: $color-navbar;
-
-    &:hover {
-      animation-name: hover-container;
-      animation-duration: 0.3s;
-      animation-fill-mode: forwards;
-    }
+    opacity: 60%;
   }
-  @keyframes hover-container {
-    from {background-color: $color-navbar;}
-    to {background-color: $color-secondary;}
+
+  &__active {
+    opacity: 1;
   }
 }
 </style>

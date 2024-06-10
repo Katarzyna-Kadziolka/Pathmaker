@@ -25,7 +25,7 @@ defineProps<{
     flex-direction: column;
     align-items: center;
     padding: 0.5rem;
-    opacity: 50%;
+    opacity: 60%;
   }
   &__icon {
     font-size: 1.5rem;
