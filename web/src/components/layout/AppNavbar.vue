@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import NavbarButton from "@/components/layout/AppNavbarButton.vue";
-import {onBeforeUnmount, onMounted, ref} from "vue";
+import {computed, onBeforeUnmount, onMounted, ref, watch} from "vue";
 import {faBars, faSignsPost, faDiceD20, faFeather, faArrowRightToBracket} from "@fortawesome/free-solid-svg-icons";
 import {useRoute} from "vue-router";
 import router from "@/router";
 
 const route = useRoute();
-let activeItemName = ref(route.name);
 
 const onItemClick = async (name: string) => {
-  activeItemName.value = name;
   await router.push({name: name});
 }
+
+const activeItemName = computed(() => route.name);
 </script>
 
 <template>

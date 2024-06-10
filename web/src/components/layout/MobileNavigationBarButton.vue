@@ -24,11 +24,11 @@ defineProps<{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem;
+    padding: 0.5rem;
     opacity: 50%;
   }
   &__icon {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   &__active {
     opacity: 1;

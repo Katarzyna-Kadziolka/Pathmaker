@@ -2,16 +2,16 @@
 import {faDiceD20, faFeather, faSignsPost} from "@fortawesome/free-solid-svg-icons";
 import MobileNavigationBarButton from "@/components/layout/MobileNavigationBarButton.vue";
 import {useRoute} from "vue-router";
-import {ref} from "vue";
+import {computed} from "vue";
 import router from "@/router";
 
 const route = useRoute();
-let activeItemName = ref(route.name);
 
 const onItemClick = async (name: string) => {
-  activeItemName.value = name;
   await router.push({name: name});
 }
+
+const activeItemName = computed(() => route.name);
 
 </script>
 
@@ -33,6 +33,7 @@ const onItemClick = async (name: string) => {
     width: 100%;
     border-top: 0.1rem solid $color-border;
     background: $color-navbar;
+    height: $nav-height;
   }
 }
 </style>
