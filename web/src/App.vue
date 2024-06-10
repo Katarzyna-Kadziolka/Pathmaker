@@ -10,10 +10,14 @@ const {t} = useI18n();
   <header>
     <Navbar />
   </header>
-
-  <RouterView />
+  <main>
+    <RouterView />
+  </main>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+main {
+  padding-top: $nav-height * 0.8;
+}
 
 </style>
