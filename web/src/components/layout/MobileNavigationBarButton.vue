@@ -4,12 +4,13 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 defineProps<{
   icon: IconDefinition,
-  name: string
+  name: string,
+  isActive: boolean
 }>()
 </script>
 
 <template>
-<div class="mobile-navigation-bar-button__container">
+<div class="mobile-navigation-bar-button__container" :class="[isActive ? 'mobile-navigation-bar-button__active' : '']">
   <div class="mobile-navigation-bar-button__icon">
     <font-awesome-icon :icon="icon" />
   </div>
@@ -24,9 +25,13 @@ defineProps<{
     flex-direction: column;
     align-items: center;
     padding: 1rem;
+    opacity: 50%;
   }
   &__icon {
     font-size: 2rem;
+  }
+  &__active {
+    opacity: 1;
   }
 }
 </style>
