@@ -24,7 +24,7 @@ defineProps<{
     column-gap: 0.5rem;
     padding: 1rem;
     cursor: pointer;
-    border-radius: 0.5rem;
+    background: $color-navbar;
 
     &:hover {
       animation-name: hover-container;

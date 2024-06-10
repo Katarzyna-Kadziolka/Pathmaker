@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import NavbarButton from "@/components/layout/NavbarButton.vue";
+import NavbarButton from "@/components/layout/AppNavbarButton.vue";
 import {onBeforeUnmount, onMounted, ref} from "vue";
-import {faBars, faSignsPost, faDiceD20, faFeather} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faSignsPost, faDiceD20, faFeather, faArrowRightToBracket} from "@fortawesome/free-solid-svg-icons";
 
 const isMobile = ref(false);
-const showMobileMenu = ref(false);
+const showMobileMenu = ref(true);
 
 onMounted(() => {
   isMobile.value = window.innerWidth < 768;
@@ -27,19 +27,16 @@ const openMenu = () => {
 
 <template>
   <div v-show="!isMobile" class="navbar__container">
-    <NavbarButton :icon=faSignsPost name="Explore" />
-    <NavbarButton :icon="faDiceD20" name="Play" />
-    <NavbarButton :icon="faFeather" name="Create" />
+    <img src="@/assets/Pathmaker-logo.png" alt="">
+    <NavbarButton :icon=faSignsPost name="Explore"/>
+    <NavbarButton :icon="faDiceD20" name="Play"/>
+    <NavbarButton :icon="faFeather" name="Create"/>
+    <NavbarButton :icon="faArrowRightToBracket" name="Log In"/>
   </div>
   <div v-show="isMobile" class="navbar__container">
-    <img src="../../assets/Pathmaker-logo.png" alt="">
-    <div class="navbar__hamburger-menu" @onclick="openMenu">
-      <font-awesome-icon :icon="faBars"></font-awesome-icon>
-    </div>
-    <div v-show="showMobileMenu" class="navbar__menu">
-      <NavbarButton :icon=faSignsPost name="Explore" />
-      <NavbarButton :icon="faDiceD20" name="Play" />
-      <NavbarButton :icon="faFeather" name="Create" />
+    <img src="@/assets/Pathmaker-logo.png" alt="">
+    <div class="navbar__account" @click="openMenu">
+      <font-awesome-icon :icon="faArrowRightToBracket"></font-awesome-icon>
     </div>
   </div>
 </template>
@@ -49,6 +46,7 @@ img {
   max-width: 40%;
   padding-left: 0.5rem;
 }
+
 .navbar {
   &__container {
     display: flex;
@@ -62,13 +60,13 @@ img {
     width: 100%;
     border-bottom: 0.1rem solid $color-border;
   }
-  &__hamburger-menu {
+
+  &__account {
     display: flex;
     padding: 1rem;
     cursor: pointer;
-  }
-  &__menu {
-    display: flex;
+    font-size: 1.5rem;
+    opacity: 50%;
   }
 }
 
