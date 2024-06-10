@@ -4,6 +4,8 @@ import MobileNavigationBarButton from "@/components/layout/MobileNavigationBarBu
 import {useRoute} from "vue-router";
 import {computed} from "vue";
 import router from "@/router";
+import {useI18n} from "vue-i18n";
+const {t} = useI18n();
 
 const route = useRoute();
 
@@ -17,9 +19,9 @@ const activeItemName = computed(() => route.name);
 
 <template>
   <div class="mobile-navigation-bar__container">
-    <MobileNavigationBarButton :icon=faSignsPost name="Explore" :is-active="activeItemName == 'explore'" @click="() => onItemClick('explore')"/>
-    <MobileNavigationBarButton :icon="faDiceD20" name="Play" :is-active="activeItemName == 'play'" @click="() => onItemClick('play')"/>
-    <MobileNavigationBarButton :icon="faFeather" name="Create" :is-active="activeItemName == 'create'" @click="() => onItemClick('create')"/>
+    <MobileNavigationBarButton :icon=faSignsPost :name="t('layout.explore')" :is-active="activeItemName == 'explore'" @click="() => onItemClick('explore')"/>
+    <MobileNavigationBarButton :icon="faDiceD20" :name="t('layout.play')" :is-active="activeItemName == 'play'" @click="() => onItemClick('play')"/>
+    <MobileNavigationBarButton :icon="faFeather" :name="t('layout.create')" :is-active="activeItemName == 'create'" @click="() => onItemClick('create')"/>
   </div>
 </template>
 

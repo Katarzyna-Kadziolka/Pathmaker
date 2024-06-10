@@ -4,6 +4,9 @@ import {computed} from "vue";
 import {faSignsPost, faDiceD20, faFeather, faArrowRightToBracket} from "@fortawesome/free-solid-svg-icons";
 import {useRoute} from "vue-router";
 import router from "@/router";
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n();
 
 const route = useRoute();
 
@@ -17,17 +20,17 @@ const activeItemName = computed(() => route.name);
 <template>
   <div class="navbar__container">
     <div class="navbar__web">
-      <img src="@/assets/Pathmaker-logo.png" alt="">
+      <img src="@/assets/Pathmaker-logo.png" :alt="t('layout.logo-alt')">
       <div class="navbar__navigation">
-        <NavbarButton :icon=faSignsPost name="Explore" :is-active="activeItemName == 'explore'" @click="() => onItemClick('explore')"/>
-        <NavbarButton :icon="faDiceD20" name="Play" :is-active="activeItemName == 'play'" @click="() => onItemClick('play')"/>
-        <NavbarButton :icon="faFeather" name="Create" :is-active="activeItemName == 'create'" @click="() => onItemClick('create')"/>
+        <NavbarButton :icon=faSignsPost :name="t('layout.explore')" :is-active="activeItemName == 'explore'" @click="() => onItemClick('explore')"/>
+        <NavbarButton :icon="faDiceD20" :name="t('layout.play')" :is-active="activeItemName == 'play'" @click="() => onItemClick('play')"/>
+        <NavbarButton :icon="faFeather" :name="t('layout.create')" :is-active="activeItemName == 'create'" @click="() => onItemClick('create')"/>
       </div>
 
-      <NavbarButton class="navbar__navigation-account" :icon="faArrowRightToBracket" name="Log In" :is-active="activeItemName == 'logIn'" @click="() => onItemClick('logIn')"/>
+      <NavbarButton class="navbar__navigation-account" :icon="faArrowRightToBracket" :name="t('layout.log-in')" :is-active="activeItemName == 'logIn'" @click="() => onItemClick('logIn')"/>
     </div>
     <div class="navbar__mobile">
-      <img src="@/assets/Pathmaker-logo.png" alt="">
+      <img src="@/assets/Pathmaker-logo.png" :alt="t('layout.logo-alt')">
       <div class="navbar__account" :class="[activeItemName === 'logIn' ? 'navbar__active' : '']"
            @click="() => onItemClick('logIn')">
         <font-awesome-icon :icon="faArrowRightToBracket"></font-awesome-icon>
