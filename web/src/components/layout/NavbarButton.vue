@@ -5,7 +5,7 @@ import {faBars} from "@fortawesome/free-solid-svg-icons";
 
 <template>
   <span>NavButton</span>
-  <font-awesome-icon :icon="faBars"></font-awesome-icon>
+
 </template>
 
 <style scoped>
