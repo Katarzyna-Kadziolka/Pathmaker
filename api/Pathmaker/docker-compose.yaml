@@ -16,6 +16,8 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
+      args:
+        PORT: 80
     ports:
       - 5024:80
     environment:
