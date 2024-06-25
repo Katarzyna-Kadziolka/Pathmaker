@@ -1,6 +1,7 @@
 using Amazon.S3;
 using Amazon.S3.Model;
 using Microsoft.AspNetCore.Http;
+using Pathmaker.Application.Services.Images;
 
 namespace Pathmaker.Infrastructure.Services.Images;
 

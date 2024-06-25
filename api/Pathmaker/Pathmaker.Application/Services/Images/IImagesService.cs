@@ -1,7 +1,7 @@
 using Amazon.S3.Model;
 using Microsoft.AspNetCore.Http;
 
-namespace Pathmaker.Infrastructure.Services.Images;
+namespace Pathmaker.Application.Services.Images;
 
 public interface IImagesService {
     Task<PutObjectResponse> UploadImageAsync(Guid id, IFormFile file);

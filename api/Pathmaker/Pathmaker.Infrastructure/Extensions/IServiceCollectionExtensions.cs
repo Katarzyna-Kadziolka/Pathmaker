@@ -1,6 +1,7 @@
 ﻿using Amazon.S3;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Pathmaker.Application.Services.Images;
 using Pathmaker.Infrastructure.Services.Images;
 
 namespace Pathmaker.Infrastructure.Extensions;

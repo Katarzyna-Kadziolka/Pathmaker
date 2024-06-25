@@ -1,7 +1,6 @@
-using System.Net;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Pathmaker.Infrastructure.Services.Images;
+using Pathmaker.Application.Requests.Images.Commands.CreateImage;
 
 namespace Pathmaker.Api.Controllers;
 
@@ -10,21 +9,14 @@ namespace Pathmaker.Api.Controllers;
 [Route("api/images")]
 public class ImagesController : ControllerBase {
     private readonly IMediator _mediator;
-    private readonly IImagesService _imagesService;
-    // TODO dodać cały CQRS, wyrzucić stad imageService
     
-    public ImagesController(IMediator mediator, IImagesService imagesService) {
+    public ImagesController(IMediator mediator) {
         _mediator = mediator;
-        _imagesService = imagesService;
     }
 
     [HttpPost("images/{id:guid}")]
-    public async Task<IActionResult> Upload([FromRoute] Guid id, [FromForm] IFormFile file) {
-        var response = await _imagesService.UploadImageAsync(id, file);
-        if (response.HttpStatusCode == HttpStatusCode.OK) {
-            return Ok();
-        }
-
-        return BadRequest();
+    public async Task<Guid> Create(CreateImageCommand command) {
+        return await _mediator.Send(command);
     }
+    // TODO po co zwracać IActionResult?
 }
