@@ -1,8 +1,8 @@
 ﻿using Amazon.S3;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Pathmaker.Application.Services.Images;
-using Pathmaker.Infrastructure.Services.Images;
+using Pathmaker.Application.Services.Files;
+using Pathmaker.Infrastructure.Services.Files;
 
 namespace Pathmaker.Infrastructure.Extensions;
 
@@ -10,7 +10,7 @@ namespace Pathmaker.Infrastructure.Extensions;
 public static class IServiceCollectionExtensions {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) {
         services.AddSingleton<IAmazonS3, AmazonS3Client>();
-        services.AddSingleton<IImagesService, ImageService>();
+        services.AddSingleton<IFileService, FileService>();
         return services;
     }
 }

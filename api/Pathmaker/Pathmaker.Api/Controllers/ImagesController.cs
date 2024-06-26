@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Pathmaker.Application.Requests.Images.Commands.CreateImage;
+using Pathmaker.Application.Requests.Files.Commands.CreateFile;
 
 namespace Pathmaker.Api.Controllers;
 
@@ -14,9 +14,9 @@ public class ImagesController : ControllerBase {
         _mediator = mediator;
     }
 
-    [HttpPost("images/{id:guid}")]
-    public async Task<Guid> Create(CreateImageCommand command) {
+    [HttpPost]
+    [ProducesResponseType(typeof(CreateFileResponse), StatusCodes.Status200OK)]
+    public async Task<ActionResult<CreateFileResponse>> Create(CreateFileCommand command) {
         return await _mediator.Send(command);
     }
-    // TODO po co zwracać IActionResult?
 }
