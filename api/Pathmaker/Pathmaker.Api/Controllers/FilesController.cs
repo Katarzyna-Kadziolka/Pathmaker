@@ -7,10 +7,10 @@ namespace Pathmaker.Api.Controllers;
 [ApiController]
 [Produces("application/json")]
 [Route("api/images")]
-public class ImagesController : ControllerBase {
+public class FilesController : ControllerBase {
     private readonly IMediator _mediator;
     
-    public ImagesController(IMediator mediator) {
+    public FilesController(IMediator mediator) {
         _mediator = mediator;
     }
 

@@ -8,8 +8,8 @@ namespace Pathmaker.Infrastructure.Services.Files;
 
 public class FileService : IFileService {
     private readonly IAmazonS3 _s3;
-    private readonly FileServiceOptions _options;
-    public FileService(IAmazonS3 s3, IOptions<FileServiceOptions> options ) {
+    private readonly AwsOptions _options;
+    public FileService(IAmazonS3 s3, IOptions<AwsOptions> options ) {
         _s3 = s3;
         _options = options.Value;
     }
