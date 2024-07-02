@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Pathmaker.Application.Services.Files;
 
@@ -8,7 +9,9 @@ public class CreateFileCommandHandlerTests {
     [Test]
     public async Task Handle_ShouldReturnCreateFileResponse() {
         // Arrange
-        var service = Substitute.For<IFileService>();
+        // var file = new FormFile();
+        // var service = Substitute.For<IFileService>();
+        // service.UploadImageAsync();
     }
     
 }

@@ -16,4 +16,10 @@
         <PackageReference Include="NSubstitute" Version="5.1.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Assets\bella.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
