@@ -6,6 +6,7 @@ using Pathmaker.Api.Configuration.Logging;
 using Pathmaker.Api.Configuration.ServicesValidation;
 using Pathmaker.Api.Configuration.Swagger;
 using Pathmaker.Application.Extensions;
+using Pathmaker.Application.Services.Files;
 using Pathmaker.Infrastructure.Extensions;
 using Pathmaker.Shared.Extensions;
 
@@ -37,6 +38,8 @@ void RunApplication() {
         .WriteTo.Console()
         .ReadFrom.Configuration(ctx.Configuration));
     // Add services to the container.
+    builder.Services.AddOptions<AwsOptions>()
+        .Bind(builder.Configuration.GetSection(AwsOptions.Aws));
     builder.Services.AddShared(builder.Configuration);
     builder.Services.AddApplication(builder.Configuration, builder.Environment);
     builder.Services.AddInfrastructure(builder.Configuration);
