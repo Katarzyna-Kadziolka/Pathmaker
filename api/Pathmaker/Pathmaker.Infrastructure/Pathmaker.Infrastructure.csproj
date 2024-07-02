@@ -10,4 +10,9 @@
         <ProjectReference Include="..\Pathmaker.Application\Pathmaker.Application.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.301" />
+        <PackageReference Include="AWSSDK.S3" Version="3.7.309.8" />
+    </ItemGroup>
+
 </Project>
