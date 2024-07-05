@@ -10,10 +10,10 @@ namespace Pathmaker.Infrastructure.Extensions;
 // ReSharper disable once InconsistentNaming
 public static class IServiceCollectionExtensions {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) {
-        var fileOptions = new AwsOptions();
-        configuration.GetSection(AwsOptions.Aws).Bind(fileOptions);
+        var options = configuration.GetSection(AwsOptions.SectionName).Get<AwsOptions>();
+        ArgumentNullException.ThrowIfNull(options);
         var awsOptions = configuration.GetAWSOptions();
-        awsOptions.Credentials = new BasicAWSCredentials(fileOptions.AccessKey, fileOptions.SecretKey);
+        awsOptions.Credentials = new BasicAWSCredentials(options.AccessKey, options.SecretKey);
         services.AddDefaultAWSOptions(awsOptions);
         services.AddAWSService<IAmazonS3>();
         services.AddSingleton<IFileService, FileService>();

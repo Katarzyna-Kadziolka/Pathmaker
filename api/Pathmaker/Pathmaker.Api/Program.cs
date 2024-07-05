@@ -39,7 +39,7 @@ void RunApplication() {
         .ReadFrom.Configuration(ctx.Configuration));
     // Add services to the container.
     builder.Services.AddOptions<AwsOptions>()
-        .Bind(builder.Configuration.GetSection(AwsOptions.Aws));
+        .Bind(builder.Configuration.GetSection(AwsOptions.SectionName));
     builder.Services.AddShared(builder.Configuration);
     builder.Services.AddApplication(builder.Configuration, builder.Environment);
     builder.Services.AddInfrastructure(builder.Configuration);

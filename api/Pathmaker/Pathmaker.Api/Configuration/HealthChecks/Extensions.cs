@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+﻿using Amazon.Runtime;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Pathmaker.Application.Services.Files;
 
 namespace Pathmaker.Api.Configuration.HealthChecks;
 
@@ -12,8 +14,15 @@ public static class Extensions {
         else {
             connectionString = configuration.GetConnectionString("Default")!;
         }
+
+        var options = configuration.GetSection(AwsOptions.SectionName).Get<AwsOptions>();         
         services
             .AddHealthChecks()
+            .AddS3(o => {
+                o.BucketName = options!.BucketName;
+                o.Credentials = new BasicAWSCredentials(options.AccessKey, options.SecretKey);
+                o.S3Config = new();
+            })
             .AddNpgSql(connectionString);
 
         return services;
