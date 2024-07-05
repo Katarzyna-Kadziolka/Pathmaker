@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Pathmaker.Application.Behaviour.Exceptions;
 using Pathmaker.Application.Requests.Files.Commands.CreateFile;
@@ -16,10 +17,11 @@ public class CreateFileCommandHandlerTests {
         var command = new CreateFileCommand {
             File = formFile
         };
+        var fileId = Guid.NewGuid();
 
         var fileService = Substitute.For<IFileService>();
         fileService.UploadImageAsync(formFile).Returns(new FileServiceResult {
-            FileId = Guid.NewGuid(),
+            FileId = fileId,
             IsSuccess = true
         });
         var sut = new CreateFileCommandHandler(fileService);
@@ -28,20 +30,15 @@ public class CreateFileCommandHandlerTests {
         var result = await sut.Handle(command, CancellationToken.None);
 
         // Assert
-        result.Should().BeOfType<CreateFileResponse>();
-        result.FileId.Should().NotBeEmpty();
+        result.FileId.Should().Be(fileId);
     }
 
     [Test]
-    public async Task Handle_InValidImage_ShouldReturnCreateFileResponse() {
+    public async Task Handle_InvalidImage_ShouldReturnCreateFileResponse() {
         // Arrange
-        var formFile = AssetsManeger.GetImage();
-        var command = new CreateFileCommand {
-            File = formFile
-        };
-
+        var command = new CreateFileCommand();
         var fileService = Substitute.For<IFileService>();
-        fileService.UploadImageAsync(formFile).Returns(new FileServiceResult {
+        fileService.UploadImageAsync(Arg.Any<IFormFile>()).Returns(new FileServiceResult {
             IsSuccess = false
         });
         var sut = new CreateFileCommandHandler(fileService);
