@@ -1,4 +1,5 @@
-﻿using Amazon.Runtime;
+﻿using Amazon;
+using Amazon.Runtime;
 using Amazon.S3;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ public static class IServiceCollectionExtensions {
         ArgumentNullException.ThrowIfNull(options);
         var awsOptions = configuration.GetAWSOptions();
         awsOptions.Credentials = new BasicAWSCredentials(options.AccessKey, options.SecretKey);
+        awsOptions.Region = RegionEndpoint.EUNorth1;
         services.AddDefaultAWSOptions(awsOptions);
         services.AddAWSService<IAmazonS3>();
         services.AddSingleton<IFileService, FileService>();

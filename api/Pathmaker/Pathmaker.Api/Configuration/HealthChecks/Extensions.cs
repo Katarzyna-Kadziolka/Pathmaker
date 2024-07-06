@@ -1,4 +1,6 @@
-﻿using Amazon.Runtime;
+﻿using Amazon;
+using Amazon.Runtime;
+using Amazon.S3;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Pathmaker.Application.Services.Files;
 
@@ -21,7 +23,9 @@ public static class Extensions {
             .AddS3(o => {
                 o.BucketName = options!.BucketName;
                 o.Credentials = new BasicAWSCredentials(options.AccessKey, options.SecretKey);
-                o.S3Config = new();
+                o.S3Config = new AmazonS3Config {
+                    RegionEndpoint = RegionEndpoint.EUNorth1
+                };
             })
             .AddNpgSql(connectionString);
 
