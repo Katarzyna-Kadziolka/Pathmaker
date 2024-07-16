@@ -27,7 +27,7 @@ public class FileService : IFileService {
             ContentType = file.ContentType,
             InputStream = file.OpenReadStream(),
             Metadata = {
-                ["x-amz-meta-originalname"] = file.FileName,
+                ["x-amz-meta-originalname"] = Uri.EscapeDataString(file.FileName),
                 ["x-amz-meta-extension"] = Path.GetExtension(file.FileName)
             }
         };
