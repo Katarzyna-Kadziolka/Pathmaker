@@ -1,4 +1,6 @@
 using System.Data.Common;
+using Amazon.S3;
+using Amazon.S3.Model;
 using DotNet.Testcontainers.Containers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -39,6 +41,8 @@ public class PathmakerApiWebApplicationFactory : WebApplicationFactory<IApiMarke
         await _awsContainer.StartAsync();
         HttpClient = CreateClient();
         await InitializeRespawner();
+        
+
     }
 
     // ReSharper disable once IdentifierTypo
@@ -93,11 +97,24 @@ public class PathmakerApiWebApplicationFactory : WebApplicationFactory<IApiMarke
             var scopedServices = scope.ServiceProvider;
             var db = scopedServices.GetRequiredService<ApplicationDbContext>();
             db.Database.Migrate();
+
+            CreateAwsS3Bucket(scopedServices);
         });
 
         builder.ConfigureTestServices(services => {
             services.RemoveAll<IDateTimeProvider>();
             services.AddSingleton<IDateTimeProvider, TestDateTimeProvider>();
+            
+
         });
+    }
+
+    private static void CreateAwsS3Bucket(IServiceProvider scopedServices) {
+        var client = scopedServices.GetRequiredService<IAmazonS3>();
+        var request = new PutBucketRequest {
+            BucketName = "pathmaker",
+            UseClientRegion = true
+        };
+        client.PutBucketAsync(request).GetAwaiter().GetResult();
     }
 }

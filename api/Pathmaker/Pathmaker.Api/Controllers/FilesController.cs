@@ -16,7 +16,7 @@ public class FilesController : ControllerBase {
 
     [HttpPost]
     [ProducesResponseType(typeof(CreateFileResponse), StatusCodes.Status200OK)]
-    public async Task<ActionResult<CreateFileResponse>> Create(CreateFileCommand command) {
+    public async Task<ActionResult<CreateFileResponse>> Post([FromForm] CreateFileCommand command) {
         return await _mediator.Send(command);
     }
 }
