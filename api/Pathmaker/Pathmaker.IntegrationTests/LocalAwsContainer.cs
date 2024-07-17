@@ -3,8 +3,8 @@ using DotNet.Testcontainers.Containers;
 
 namespace Pathmaker.IntegrationTests;
 
-public class FileStorageContainer {
-    const int LocalStackPort = 4566;
+public class LocalAwsContainer {
+    public const int LocalStackPort = 4566;
     const string LocalStackImage = "localstack/localstack:1.3.1";
 
     public static IContainer GetContainer() {
