@@ -5,11 +5,15 @@ namespace Pathmaker.Tests.Shared.Assets;
 public class AssetsManeger {
     public static IFormFile GetImage() {
         var path = "Assets/test.jpg";
-        using var stream = new FileStream(path, FileMode.Open);
-        return new FormFile(stream,
+        var memoryStream = new MemoryStream(File.ReadAllBytes(path));
+        return new FormFile(memoryStream,
             0,
-            stream.Length,
+            memoryStream.Length,
             Path.GetFileName(path),
-            Path.GetFileName(path));
-    } 
+            Path.GetFileName(path)) {
+            Headers = new HeaderDictionary(),
+            ContentType = "image/jpeg",
+            ContentDisposition = "form-data"
+        };
+    }
 }
