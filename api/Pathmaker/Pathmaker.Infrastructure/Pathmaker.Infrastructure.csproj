@@ -13,6 +13,9 @@
     <ItemGroup>
         <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.301" />
         <PackageReference Include="AWSSDK.S3" Version="3.7.309.8" />
+        <PackageReference Include="Hangfire.AspNetCore" Version="1.8.14" />
+        <PackageReference Include="Hangfire.Core" Version="1.8.14" />
+        <PackageReference Include="Hangfire.PostgreSql" Version="1.20.9" />
     </ItemGroup>
 
 </Project>
