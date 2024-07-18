@@ -18,9 +18,5 @@ public class LocalAwsContainer {
                     .ForPort(LocalStackPort)))
             .Build();
         return localStackTestContainer;
-        // await localStackTestContainer.StartAsync();
-        //
-        // var localstackUrl = $"http://{localStackTestContainer.Hostname}:{localStackTestContainer.GetMappedPublicPort(4566)}";
-        // return localstackUrl;
     }
 }
