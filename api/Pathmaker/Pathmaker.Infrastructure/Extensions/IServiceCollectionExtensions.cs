@@ -23,6 +23,7 @@ public static class IServiceCollectionExtensions {
         builder.UseRouting();
         builder.UseHangfireDashboard();
         builder.UseEndpoints(endpoints => { endpoints.MapHangfireDashboard(); });
+        RecurringJob.AddOrUpdate<FileCleanupJob>("cleanup", job => job.Cleanup(), Cron.Minutely);
         return builder;
     }
 
@@ -38,7 +39,10 @@ public static class IServiceCollectionExtensions {
 
     private static void AddHangfire(this IServiceCollection services, IConfiguration configuration) {
         services.AddHangfire(config =>
-            config.UsePostgreSqlStorage(c =>
+            config
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UsePostgreSqlStorage(c =>
                 c.UseNpgsqlConnection(configuration.GetConnectionString("Default"))));
         services.AddHangfireServer();
     }
