@@ -5,6 +5,7 @@ using Pathmaker.Api.Configuration.JsonSerilizer;
 using Pathmaker.Api.Configuration.Logging;
 using Pathmaker.Api.Configuration.ServicesValidation;
 using Pathmaker.Api.Configuration.Swagger;
+using Pathmaker.Api.Extensions;
 using Pathmaker.Application.Extensions;
 using Pathmaker.Application.Services.Files;
 using Pathmaker.Infrastructure.Extensions;
@@ -62,7 +63,11 @@ void RunApplication() {
     app.MapHealthChecks();
     app.MapControllers();
     app.UseInfrastructure();
-    
+
+    if (!app.Environment.IsProduction()) {
+        app.MapDebugEndpoints();
+    }
+
     app.AddMigration();
 
     app.Run();
