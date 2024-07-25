@@ -23,7 +23,6 @@ public static class IServiceCollectionExtensions {
         builder.UseRouting();
         builder.UseHangfireDashboard();
         builder.UseEndpoints(endpoints => { endpoints.MapHangfireDashboard(); });
-        RecurringJob.AddOrUpdate<FileCleanupJob>("cleanup", job => job.Cleanup(), Cron.Minutely);
         return builder;
     }
 
