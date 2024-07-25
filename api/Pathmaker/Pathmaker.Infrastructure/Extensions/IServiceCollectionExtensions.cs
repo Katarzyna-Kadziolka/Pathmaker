@@ -5,6 +5,7 @@ using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Pathmaker.Application.Services.Files;
 using Pathmaker.Infrastructure.Services.Files;
 
@@ -19,11 +20,12 @@ public static class IServiceCollectionExtensions {
         return services;
     }
 
-    public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder builder) {
-        builder.UseRouting();
-        builder.UseHangfireDashboard();
-        builder.UseEndpoints(endpoints => { endpoints.MapHangfireDashboard(); });
-        return builder;
+    public static IApplicationBuilder UseInfrastructure(this WebApplication app) {
+        if (!app.Environment.IsProduction()) {
+            app.UseHangfire();
+        }
+
+        return app;
     }
 
     private static void AddAws(this IServiceCollection services, IConfiguration configuration) {
@@ -42,7 +44,15 @@ public static class IServiceCollectionExtensions {
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
                 .UsePostgreSqlStorage(c =>
-                c.UseNpgsqlConnection(configuration.GetConnectionString("Default"))));
+                    c.UseNpgsqlConnection(configuration.GetConnectionString("Default"))));
         services.AddHangfireServer();
+    }
+
+    private static void UseHangfire(this IApplicationBuilder builder) {
+        builder.UseRouting();
+        builder.UseHangfireDashboard();
+        builder.UseEndpoints(endpoints => {
+            endpoints.MapHangfireDashboard();
+        });
     }
 }
