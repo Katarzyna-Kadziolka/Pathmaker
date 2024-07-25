@@ -21,19 +21,20 @@ public static class IConfigurationExtensions {
 
                 return arr;
             }
-            else {
-                obj.Add(child.Key, Serialize(child));
-            }
+
+            obj.Add(child.Key, Serialize(child));
         }
 
         if (obj.Count == 0 && configuration is IConfigurationSection section) {
             if (bool.TryParse(section.Value, out bool boolean)) {
                 return JsonValue.Create(boolean);
             }
-            else if (decimal.TryParse(section.Value, out decimal real)) {
+
+            if (decimal.TryParse(section.Value, out decimal real)) {
                 return JsonValue.Create(real);
             }
-            else if (long.TryParse(section.Value, out long integer)) {
+
+            if (long.TryParse(section.Value, out long integer)) {
                 return JsonValue.Create(integer);
             }
 
