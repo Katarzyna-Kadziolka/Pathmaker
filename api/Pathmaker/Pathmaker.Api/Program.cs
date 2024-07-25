@@ -61,6 +61,7 @@ void RunApplication() {
 
     app.MapHealthChecks();
     app.MapControllers();
+    app.UseInfrastructure();
     
     app.AddMigration();
 
