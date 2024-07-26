@@ -50,7 +50,7 @@ public static class IServiceCollectionExtensions {
 
     private static void UseDefaultHangfireDashboard(this IApplicationBuilder builder) {
         builder.UseRouting();
-        HangfireApplicationBuilderExtensions.UseHangfireDashboard(builder);
+        builder.UseHangfireDashboard();
         builder.UseEndpoints(endpoints => {
             endpoints.MapHangfireDashboard();
         });
