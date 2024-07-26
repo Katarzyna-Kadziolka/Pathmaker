@@ -6,7 +6,7 @@ namespace Pathmaker.Infrastructure.Extensions;
 
 public static class WebApplicationBuilderExtensions {
     public static void AddSentry(this WebApplicationBuilder builder) {
-        if (builder.Configuration.IsFeatureEnabled("Sentry")) {
+        if (builder.Configuration.IsFeatureEnabled(FeatureFlags.Sentry)) {
             builder.WebHost.UseSentry();
         }
     }
