@@ -10,6 +10,7 @@ using Pathmaker.Application.Extensions;
 using Pathmaker.Application.Services.Files;
 using Pathmaker.Infrastructure.Extensions;
 using Pathmaker.Shared.Extensions;
+using Pathmaker.Shared.Features;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -56,15 +57,15 @@ void RunApplication() {
     app.UseSerilogRequestLogging(options => { options.GetLevel = LogHelper.ExcludeHealthChecks; });
     app.UseApplication();
     // Configure the HTTP request pipeline.
-    if (!app.Environment.IsProduction()) {
+    if (builder.Configuration.IsFeatureEnabled(FeatureFlags.SwaggerUi)) {
         app.UseSwaggerUi();
     }
 
     app.MapHealthChecks();
     app.MapControllers();
-    app.UseInfrastructure();
+    app.UseInfrastructure(builder.Configuration);
 
-    if (!app.Environment.IsProduction()) {
+    if (builder.Configuration.IsFeatureEnabled(FeatureFlags.DebugEndpoints)) {
         app.MapDebugEndpoints();
     }
 
