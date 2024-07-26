@@ -50,6 +50,7 @@ void RunApplication() {
     builder.Services.AddCors();
     builder.Services.AddSwagger();
     builder.Host.AddServicesValidationOnStart();
+    builder.AddSentry();
 
     var app = builder.Build();
     app.UseCors(policyBuilder => { policyBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
