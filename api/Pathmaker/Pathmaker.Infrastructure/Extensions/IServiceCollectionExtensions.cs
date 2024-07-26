@@ -5,9 +5,9 @@ using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Pathmaker.Application.Services.Files;
 using Pathmaker.Infrastructure.Services.Files;
+using Pathmaker.Shared.Features;
 
 namespace Pathmaker.Infrastructure.Extensions;
 
@@ -20,9 +20,9 @@ public static class IServiceCollectionExtensions {
         return services;
     }
 
-    public static IApplicationBuilder UseInfrastructure(this WebApplication app) {
-        if (!app.Environment.IsProduction()) {
-            app.UseHangfire();
+    public static IApplicationBuilder UseInfrastructure(this WebApplication app, IConfiguration configuration) {
+        if (configuration.IsFeatureEnabled(FeatureFlags.HangfireDashboard)) {
+            app.UseDefaultHangfireDashboard();
         }
 
         return app;
@@ -48,7 +48,7 @@ public static class IServiceCollectionExtensions {
         services.AddHangfireServer();
     }
 
-    private static void UseHangfire(this IApplicationBuilder builder) {
+    private static void UseDefaultHangfireDashboard(this IApplicationBuilder builder) {
         builder.UseRouting();
         builder.UseHangfireDashboard();
         builder.UseEndpoints(endpoints => {
