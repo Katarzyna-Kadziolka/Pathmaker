@@ -22,7 +22,7 @@ public static class IServiceCollectionExtensions {
 
     public static IApplicationBuilder UseInfrastructure(this WebApplication app, IConfiguration configuration) {
         if (configuration.IsFeatureEnabled(FeatureFlags.HangfireDashboard)) {
-            app.UseHangfireDashboard();
+            app.UseDefaultHangfireDashboard();
         }
 
         return app;
@@ -48,7 +48,7 @@ public static class IServiceCollectionExtensions {
         services.AddHangfireServer();
     }
 
-    private static void UseHangfireDashboard(this IApplicationBuilder builder) {
+    private static void UseDefaultHangfireDashboard(this IApplicationBuilder builder) {
         builder.UseRouting();
         HangfireApplicationBuilderExtensions.UseHangfireDashboard(builder);
         builder.UseEndpoints(endpoints => {
