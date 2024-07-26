@@ -13,6 +13,7 @@ using Respawn;
 using Pathmaker.Api;
 using Pathmaker.Application.Services.Files;
 using Pathmaker.Persistence;
+using Pathmaker.Shared.Features;
 using Pathmaker.Shared.Services.DateTimeProviders;
 using Pathmaker.Tests.Shared.Services.DateTimeProviders;
 using Testcontainers.PostgreSql;
@@ -72,9 +73,11 @@ public class PathmakerApiWebApplicationFactory : WebApplicationFactory<IApiMarke
             .AddInMemoryCollection(new Dictionary<string, string?> {
                 ["ConnectionStrings:Default"] = _postgreSqlContainer.GetConnectionString(),
                 [$"{AwsOptions.SectionName}:{nameof(AwsOptions.ServiceUrl)}"] =
-                    $"http://{_awsContainer.Hostname}:{_awsContainer.GetMappedPublicPort(LocalAwsContainer.LocalStackPort)}"
+                    $"http://{_awsContainer.Hostname}:{_awsContainer.GetMappedPublicPort(LocalAwsContainer.LocalStackPort)}",
+                [$"{FeatureFlags.SectionName}:{nameof(FeatureFlags.Sentry)}"] = "false"
             }).Build();
         builder.UseConfiguration(config);
+        
 
 
         // Doesn't work in .Net 6: https://github.com/dotnet/aspnetcore/issues/37680
