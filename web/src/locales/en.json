@@ -5,5 +5,10 @@
       "play": "Play",
       "create": "Create",
       "log-in": "Log In"
-    }
+    },
+  "not-found": {
+    "code": "404",
+    "message": "You seem lost!",
+    "button": "Come back"
+  }
 }
