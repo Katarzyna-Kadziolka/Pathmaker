@@ -28,6 +28,11 @@ const router = createRouter({
             name: 'logIn',
             component: () => import('../views/LogInView.vue')
         },
+        {
+            path: '/:catchAll(.*)',
+            name: 'notFound',
+            component: () => import('../views/NotFoundView.vue')
+        }
     ]
 })
 
